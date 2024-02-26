@@ -1,2 +1,22 @@
 ---
 # defaults file for victoriametrics_single
+
+# where to download the victoriametrics binary from
+victoriametrics_single_repo_url: "https://github.com/VictoriaMetrics/VictoriaMetrics"
+victoriametrics_single_download_url: "{{ victoriametrics_single_repo_url }}/releases/download/{{ victoriametrics_single_version }}\
+  /victoria-metrics-linux-{{ go_arch }}-{{ victoriametrics_single_version }}.tar.gz"
+victoriametrics_single_version: "v1.98.0"
+
+# where to install the victoriametrics binary and configuration
+victoriametrics_single_system_user: "victoriametrics"
+victoriametrics_single_system_group: "{{ victoriametrics_single_system_user }}"
+victoriametrics_single_data_dir: "/var/lib/victoriametrics"
+victoriametrics_single_config_dir: "/etc/victoriametrics"
+
+# victoriametrics configuration
+# https://docs.victoriametrics.com/single-server-victoriametrics/#list-of-command-line-flags
+victoriametrics_single_service_args:
+  storageDataPath: "{{ victoriametrics_single_data_dir }}"
+  promscrape.config: "{{ victoriametrics_single_config_dir }}/promscrape.yml"
+  httpListenAddr: ":8428"
+  retentionPeriod: "30d"

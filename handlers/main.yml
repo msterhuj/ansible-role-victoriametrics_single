@@ -1,2 +1,10 @@
 ---
 # handlers file for victoriametrics_single
+- name: "Reload systemd"
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: "Reload VictoriaMetrics"
+  ansible.builtin.systemd:
+    name: "victoriametrics"
+    state: "reloaded"

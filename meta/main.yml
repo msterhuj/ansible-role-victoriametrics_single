@@ -1,14 +1,14 @@
 galaxy_info:
   author: msterhuj
   description: This role installs and configures VictoriaMetrics
-  
+
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   issue_tracker_url: https://github.com/msterhuj/ansible-role-victoriametrics_single/issues
 
   license: GPL-3.0-only
 
-  min_ansible_version: 2.1
+  min_ansible_version: "2.1"
 
   #
   # Provide a list of supported platforms, and for each platform a list of versions.

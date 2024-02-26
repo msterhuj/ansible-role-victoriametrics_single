@@ -11,7 +11,8 @@ This role does not have any specific requirements.
 Role Variables
 --------------
 
-Not implemented yet.
+Variable can be found in `defaults/main.yml` and are as follows: [Click here](defaults/main.yml)
+
 
 Dependencies
 ------------
@@ -21,11 +22,9 @@ This role does not have any dependencies.
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - hosts: victoriametrics-single
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: msterhuj.victoriametrics_single }
 
 License
 -------
