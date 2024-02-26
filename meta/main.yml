@@ -1,5 +1,6 @@
 galaxy_info:
   author: msterhuj
+  role_name: victoriametrics_single
   description: This role installs and configures VictoriaMetrics
 
   # If the issue tracker for your role is not on github, uncomment the
