@@ -6,7 +6,7 @@ This role will install and configure a single instance of VictoriaMetrics.
 Requirements
 ------------
 
-This role does not have any specific requirements.
+You need to enable the gathering of facts in your playbook.
 
 Role Variables
 --------------

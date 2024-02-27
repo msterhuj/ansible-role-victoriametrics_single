@@ -34,7 +34,7 @@
 
 - name: "Extract victoriametrics binary to /tmp"
   ansible.builtin.unarchive:
-    src: "/tmp/victoria-metrics-linux.tar.gz"
+    src: "/tmp/victoria-metrics.tar.gz"
     dest: "/tmp"
     remote_src: true
 
@@ -52,7 +52,7 @@
     mode: "0644"
     owner: "root"
     group: "root"
-  notify: "Reload systemd"
+  notify: "Restart VictoriaMetrics"
 
 - name: "Create victoriametrics configuration file"
   ansible.builtin.template:
@@ -61,7 +61,7 @@
     mode: "0644"
     owner: "{{ victoriametrics_single_system_user }}"
     group: "{{ victoriametrics_single_system_group }}"
-  notify: "Reload VictoriaMetrics"
+  notify: "Restart VictoriaMetrics"
 
 - name: "Ensure victoriametrics service is started and enabled"
   ansible.builtin.service:
