@@ -20,3 +20,13 @@ victoriametrics_single_service_args:
   promscrape.config: "{{ victoriametrics_single_config_dir }}/promscrape.yml"
   httpListenAddr: ":8428"
   retentionPeriod: "30d"
+
+# prometheus scrape configuration
+victoriametrics_single_promscrape:
+  global:
+    scrape_interval: 5s 
+  scrape_configs:
+    - job_name: victoria-metrics
+      static_configs:
+        - targets:
+            - 'localhost:8428'
