@@ -24,7 +24,7 @@ victoriametrics_single_service_args:
 # prometheus scrape configuration
 victoriametrics_single_promscrape:
   global:
-    scrape_interval: 5s 
+    scrape_interval: 5s
   scrape_configs:
     - job_name: victoria-metrics
       static_configs:
