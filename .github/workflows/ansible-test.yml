@@ -19,8 +19,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: 'msterhuj.victoriametrics_single'
-      #- name: Create ansible.cfg
-      #  run: echo -e "[defaults]\nroles_path = ../" > ansible.cfg
+
       - name: Set up Python 3.
         uses: actions/setup-python@v5
         with:
@@ -48,6 +47,11 @@ jobs:
 
       - name: Install test dependencies.
         run: pip3 install ansible molecule molecule-plugins[docker] docker
+
+      - name: "docker test"
+        run: |
+          molecule create
+          docker ps -a
 
       - name: Run Molecule tests.
         run: molecule test
