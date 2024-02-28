@@ -47,13 +47,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install ansible molecule molecule-plugins[docker] docker
-
-      - name: "docker test"
-        run: |
-          molecule create
-          docker ps -a
-          docker logs molecule-systemd-ubuntu-22.04
+        run: pip3 install ansible molecule molecule-plugins[docker] docker pytest-testinfra
 
       - name: Run Molecule tests.
         run: molecule test
