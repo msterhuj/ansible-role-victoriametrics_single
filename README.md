@@ -26,6 +26,16 @@ Example Playbook
       roles:
          - { role: msterhuj.victoriametrics_single }
 
+Run molecule tests
+------------------
+
+```bash
+git clone git@github.com:msterhuj/ansible-role-victoriametrics_single.git -b master msterhuj.victoriametrics_single
+cd msterhuj.victoriametrics_single
+poetry install
+poetry run molecule test
+```
+
 License
 -------
 

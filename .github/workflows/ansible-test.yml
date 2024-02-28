@@ -1,0 +1,45 @@
+# .github/workflows/ansible-lint.yml
+name: Lint and Test Ansible Role
+on:
+  workflow_dispatch:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+defaults:
+  run:
+    working-directory: 'msterhuj.victoriametrics_single'
+
+jobs:
+  lint:
+    name: Ansible Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create ansible.cfg
+        run: echo -e "[defaults]\nroles_path = ../" > ansible.cfg
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@v24.2.0
+
+  molecule:
+    name: Molecule Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: 'msterhuj.victoriametrics_single'
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install ansible molecule molecule-plugins[docker] docker
+
+      - name: Run Molecule tests.
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
