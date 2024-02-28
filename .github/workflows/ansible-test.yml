@@ -34,6 +34,7 @@ jobs:
 
   molecule:
     name: Molecule Test
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
