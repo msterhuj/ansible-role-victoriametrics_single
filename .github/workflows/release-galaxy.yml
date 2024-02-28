@@ -1,5 +1,5 @@
 ---
-name: Publish on Ansible Galaxy
+name: Publish role on Ansible Galaxy
 
 on:
   push:
