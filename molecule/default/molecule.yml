@@ -5,7 +5,6 @@ dependency:
   name: galaxy
   options:
     ignore-errors: true
-    requirements-file: requirements.yml
 platforms:
   - name: molecule-systemd-ubuntu-22.04
     image: msterhuj/molecule-systemd-ubuntu-22.04:latest
@@ -18,4 +17,4 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+    converge: converge.yml
