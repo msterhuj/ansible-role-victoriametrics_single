@@ -42,3 +42,13 @@ def test_service(host):
 def test_socket(host):
     socket = host.socket("tcp://0.0.0.0:8428")
     assert socket.is_listening
+
+def test_cleanup(host):
+    files = [
+        "/tmp/victoria-metrics-prod"
+        "/tmp/victoria-metrics.tar.gz"
+    ]
+    
+    for file in files:
+        f = host.file(file)
+        assert not f.exists
