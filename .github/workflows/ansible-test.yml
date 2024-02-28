@@ -52,6 +52,7 @@ jobs:
         run: |
           molecule create
           docker ps -a
+          docker logs molecule-systemd-ubuntu-22.04
 
       - name: Run Molecule tests.
         run: molecule test
