@@ -19,10 +19,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: 'msterhuj.victoriametrics_single'
-      - name: Create ansible.cfg
-        run: echo -e "[defaults]\nroles_path = ../" > ansible.cfg
-      - name: Run ansible-lint
-        uses: ansible/ansible-lint@v24.2.0
+      #- name: Create ansible.cfg
+      #  run: echo -e "[defaults]\nroles_path = ../" > ansible.cfg
+      - name: Set up Python 3.
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies.
+        run: pip3 install ansible-lint
+
+      - name: Lint code.
+        run: |
+          ansible-lint -v .
 
   molecule:
     name: Molecule Test
