@@ -6,6 +6,7 @@ victoriametrics_single_repo_url: "https://github.com/VictoriaMetrics/VictoriaMet
 victoriametrics_single_download_url: "{{ victoriametrics_single_repo_url }}/releases/download/{{ victoriametrics_single_version }}\
   /victoria-metrics-linux-{{ go_arch }}-{{ victoriametrics_single_version }}.tar.gz"
 victoriametrics_single_version: "v1.98.0"
+victoriametrics_single_force_install: false
 
 # where to install the victoriametrics binary and configuration
 victoriametrics_single_system_user: "victoriametrics"

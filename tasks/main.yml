@@ -1,67 +1,26 @@
 ---
 # tasks file for victoriametrics_single
-- name: "Add victoriametrics group"
-  ansible.builtin.group:
-    name: "{{ victoriametrics_single_system_group }}"
-    state: "present"
+- name: "Check if victoriametrics binary is already installed"
+  ansible.builtin.stat:
+    path: "{{ _victoriametrics_binary_install_dir }}/victoria-metrics-prod"
+  register: victoriametrics_binary_installed
 
-- name: "Add victoriametrics as system user"
-  ansible.builtin.user:
-    name: "{{ victoriametrics_single_system_user }}"
-    group: "{{ victoriametrics_single_system_group }}"
-    shell: "/bin/false"
-    system: true
-    state: "present"
+- name: "Get installed version of victoriametrics"
+  ansible.builtin.shell: "{{ _victoriametrics_binary_install_dir }}/victoria-metrics-prod -version | cut -d '-' -f 6"
+  register: victoriametrics_installed_version
+  changed_when: false
+  failed_when: false
+  ignore_errors: true
+  when: victoriametrics_binary_installed.stat.exists
 
-- name: "Create victoriametrics data and configuration directory"
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: "directory"
-    owner: "{{ victoriametrics_single_system_user }}"
-    group: "{{ victoriametrics_single_system_group }}"
-    mode: "0755"
-  loop:
-    - "{{ victoriametrics_single_data_dir }}"
-    - "{{ victoriametrics_single_config_dir }}"
-  loop_control:
-    label: "{{ item }}"
+- name: "Include install tasks"
+  ansible.builtin.include_tasks: "install.yml"
+  when: (not victoriametrics_binary_installed.stat.exists) or
+        (victoriametrics_installed_version.stdout != victoriametrics_single_version) or
+        (victoriametrics_single_force_install)
 
-- name: "Download victoriametrics binary to tmp folder"
-  ansible.builtin.get_url:
-    url: "{{ victoriametrics_single_download_url }}"
-    dest: "/tmp/victoria-metrics.tar.gz"
-    mode: "0644"
-
-- name: "Extract victoriametrics binary to /tmp"
-  ansible.builtin.unarchive:
-    src: "/tmp/victoria-metrics.tar.gz"
-    dest: "/tmp"
-    remote_src: true
-
-- name: "Move victoriametrics binary to {{ _victoriametrics_binary_install_dir }}"
-  ansible.builtin.copy:
-    src: "/tmp/victoria-metrics-prod"
-    dest: "{{ _victoriametrics_binary_install_dir }}/victoria-metrics-prod"
-    mode: "0755"
-    remote_src: true
-
-- name: "Create victoriametrics service file"
-  ansible.builtin.template:
-    src: "victoriametrics.service.j2"
-    dest: "/etc/systemd/system/victoriametrics.service"
-    mode: "0644"
-    owner: "root"
-    group: "root"
-  notify: "Restart VictoriaMetrics"
-
-- name: "Create victoriametrics configuration file"
-  ansible.builtin.template:
-    src: "promscrape.yml.j2"
-    dest: "{{ victoriametrics_single_config_dir }}/promscrape.yml"
-    mode: "0644"
-    owner: "{{ victoriametrics_single_system_user }}"
-    group: "{{ victoriametrics_single_system_group }}"
-  notify: "Restart VictoriaMetrics"
+- name: "Include config tasks"
+  ansible.builtin.include_tasks: "config.yml"
 
 - name: "Ensure victoriametrics service is started and enabled"
   ansible.builtin.service:
