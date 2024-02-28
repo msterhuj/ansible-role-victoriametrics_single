@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: 'msterhuj.victoriametrics_single'
       - name: Create ansible.cfg
         run: echo -e "[defaults]\nroles_path = ../" > ansible.cfg
       - name: Run ansible-lint
