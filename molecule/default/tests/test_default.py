@@ -48,7 +48,7 @@ def test_cleanup(host):
         "/tmp/victoria-metrics-prod"
         "/tmp/victoria-metrics.tar.gz"
     ]
-    
+
     for file in files:
         f = host.file(file)
         assert not f.exists
