@@ -45,10 +45,14 @@ def test_socket(host):
 
 def test_cleanup(host):
     files = [
-        "/tmp/victoria-metrics-prod"
+        "/tmp/victoria-metrics-prod",
         "/tmp/victoria-metrics.tar.gz"
     ]
 
     for file in files:
         f = host.file(file)
         assert not f.exists
+
+def test_victoriametrics_home(host):
+    home = host.file("/home/victoriametrics")
+    assert not home.exists

@@ -9,6 +9,7 @@
     group: "{{ victoriametrics_single_system_group }}"
     shell: "/bin/false"
     system: true
+    create_home: false
     state: "present"
 
 - name: "Create victoriametrics data and configuration directory"
